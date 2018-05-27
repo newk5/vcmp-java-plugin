@@ -39,7 +39,7 @@ void* Platform::LoadFunction(void* module, const char* signature) {
 	return result;
 }
 
-bool Platform::GetCurrentModulePath(char* buffer, size_t size) {
+bool Platform::GetCurrentModulePath(char* buffer, size_t size) { 
 	return GetModuleFileNameA(currentModule, buffer, (DWORD)size) != 0;
 }
 

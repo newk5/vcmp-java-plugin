@@ -1,0 +1,8 @@
+syntax: glob
+
+Debug/
+Release/
+x64/
+*.opensdf
+*.sdf
+*.suo

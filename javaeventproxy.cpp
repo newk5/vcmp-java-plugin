@@ -48,6 +48,7 @@ void JavaEventProxy::MapEvents(void) {
 	m_pluginEvents->OnPlayerKeyBindUp = OnPlayerKeyBindUp;
 	m_pluginEvents->OnPlayerSpectate = OnPlayerSpectate;
 	m_pluginEvents->OnPlayerCrashReport = OnPlayerCrashReport;
+	m_pluginEvents->OnPlayerModuleList = OnPlayerModuleList;
 
 	m_pluginEvents->OnVehicleUpdate = OnVehicleUpdate;
 	m_pluginEvents->OnVehicleExplode = OnVehicleExplode;

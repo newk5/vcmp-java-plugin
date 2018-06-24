@@ -213,6 +213,7 @@ Java_Server_getSimple(jint, getHour, GetHour);
 Java_Server_getSimple(jint, getFallTimer, GetFallTimer);
 Java_Server_setSimple(jint, setFallTimer, SetFallTimer);
 Java_Server_getSimple(jint, getMinute, GetMinute);
+Java_Server_setSimple(jint, setMinute, SetMinute);
 Java_Server_setSimple(jint, setWeather, SetWeather);
 Java_Server_getSimple(jint, getWeather, GetWeather);
 Java_Server_setSimple(jfloat, setGravity, SetGravity);

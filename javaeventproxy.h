@@ -51,6 +51,7 @@ private:
 	static void OnPlayerKeyBindUp(int32_t playerId, int32_t bindId);
 	static void OnPlayerSpectate(int32_t playerId, int32_t targetPlayerId);
 	static void OnPlayerCrashReport(int32_t playerId, const char* report);
+	static void OnPlayerModuleList(int32_t playerId, const char* list);
 	static void OnVehicleUpdate(int32_t vehicleId, vcmpVehicleUpdate updateType);
 	static void OnVehicleExplode(int32_t vehicleId);
 	static void OnVehicleRespawn(int32_t vehicleId);

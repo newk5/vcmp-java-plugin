@@ -331,6 +331,8 @@ Java_Vehicle_setSimple(jint, setDamage, SetVehicleDamageData);
 Java_Vehicle_getSimple(jint, getDamageHex, GetVehicleDamageData);
 Java_Vehicle_setSimple(jint, setRadio, SetVehicleRadio);
 Java_Vehicle_getSimple(jint, getRadio, GetVehicleRadio);
+Java_Vehicle_getSimple(jint, getLightsData, GetVehicleLightsData);
+Java_Vehicle_setSimple(jint, setLightsData, SetVehicleLightsData);
 
 extern "C" JNIEXPORT jobject JNICALL Java_com_maxorator_vcmp_java_plugin_integration_vehicle_VehicleImpl_getTurretRotation(JNIEnv* jni, jobject obj) {
 	int vehicleId;

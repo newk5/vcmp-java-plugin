@@ -138,6 +138,7 @@ Java_Player_setSimple(jint, setColour, SetPlayerColour);
 Java_Player_getSimple(jint, getColourHex, GetPlayerColour);
 Java_Player_doSimple(forceSpawn, ForcePlayerSpawn);
 Java_Player_doSimple(forceSelect, ForcePlayerSelect);
+//Java_Player_doSimple(requestModuleList, GetPlayerModuleList);
 Java_Player_setSimple(jint, giveMoney, GivePlayerMoney);
 Java_Player_setSimple(jint, setMoney, SetPlayerMoney);
 Java_Player_getSimple(jint, getMoney, GetPlayerMoney);
@@ -146,6 +147,18 @@ Java_Player_getSimple(jint, getScore, GetPlayerScore);
 Java_Player_getSimple(jint, getPing, GetPlayerPing);
 Java_Player_getSimple(jboolean, isTyping, IsPlayerTyping);
 Java_Player_getSimple(jdouble, getFPS, GetPlayerFPS);
+
+
+extern "C" JNIEXPORT void JNICALL Java_com_maxorator_vcmp_java_plugin_integration_player_PlayerImpl_requestModuleList(JNIEnv* jni, jobject obj) {
+	int playerId;
+	if (!core->exc->ThreadCheck(jni));
+	else if ((playerId = core->pools->players->GetId(jni, obj)) == -1);
+	else {
+		api->GetPlayerModuleList(playerId);
+	}
+
+	
+}
 
 extern "C" JNIEXPORT jstring JNICALL Java_com_maxorator_vcmp_java_plugin_integration_player_PlayerImpl_getUID(JNIEnv* jni, jobject obj) {
 	int playerId;

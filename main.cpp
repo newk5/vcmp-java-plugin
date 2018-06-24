@@ -11,7 +11,7 @@ JavaCore* core;
 
 extern "C" EXPORT unsigned int VcmpPluginInit(PluginFuncs* pluginFunctions, PluginCallbacks* pluginCallbacks, PluginInfo* pluginInfo) {
 	Logging::Setup();
-	Logging::Log(LogInfo, __FUNCTION__, "VC:MP Java integration plugin loading.................!");
+	Logging::Log(LogInfo, __FUNCTION__, "VC:MP Java integration plugin loading...");
 
 	api = pluginFunctions;
 

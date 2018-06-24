@@ -299,6 +299,10 @@ void JavaEventProxy::OnPlayerCrashReport(int32_t playerId, const char* report) {
 	core->eventHandler->OnPlayerCrashReport(playerId, report);
 }
 
+void JavaEventProxy::OnPlayerModuleList(int32_t playerId, const char* list) {
+	core->eventHandler->OnPlayerModuleList(playerId, list);
+}
+
 
 void JavaEventProxy::OnVehicleUpdate(int32_t vehicleId, vcmpVehicleUpdate updateType) {
 	core->eventHandler->OnVehicleUpdate(vehicleId, updateType);

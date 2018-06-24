@@ -50,7 +50,8 @@ enum EventMethodName {
 	FlagOnPickupPicked,
 	FlagOnPickupRespawn,
 	FlagOnCheckPointEntered,
-	FlagOnCheckPointExited
+	FlagOnCheckPointExited,
+	FlagOnPlayerModuleList
 };
 
 JavaEventHandler::JavaEventHandler(void) {
@@ -170,6 +171,8 @@ bool JavaEventHandler::BindToClasses(bool isFirstBinding, int64_t flags, jobject
 	onPlayerSpectateMethod = GetOwnMethod(eventsClass, flags & (1LL << FlagOnPlayerSpectate), "onPlayerSpectate", "(Lcom/maxorator/vcmp/java/plugin/integration/player/Player;Lcom/maxorator/vcmp/java/plugin/integration/player/Player;)V");
 
 	onPlayerCrashReportMethod = GetOwnMethod(eventsClass, flags & (1LL << FlagOnPlayerCrashReport), "onPlayerCrashReport", "(Lcom/maxorator/vcmp/java/plugin/integration/player/Player;Ljava/lang/String;)V");
+	onPlayerModuleListMethod = GetOwnMethod(eventsClass, flags & (1LL << FlagOnPlayerModuleList), "onPlayerModuleList", "(Lcom/maxorator/vcmp/java/plugin/integration/player/Player;Ljava/lang/String;)V");
+
 
 	onVehicleUpdateMethod = GetOwnMethod(eventsClass, flags & (1LL << FlagOnVehicleUpdate), "onVehicleUpdate", "(Lcom/maxorator/vcmp/java/plugin/integration/vehicle/Vehicle;I)V");
 	onVehicleExplodeMethod = GetOwnMethod(eventsClass, flags & (1LL << FlagOnVehicleExplode), "onVehicleExplode", "(Lcom/maxorator/vcmp/java/plugin/integration/vehicle/Vehicle;)V");
@@ -536,6 +539,17 @@ void JavaEventHandler::OnPlayerCrashReport(int32_t playerId, const char* reportT
 		jstring textString = core->env->NewStringUTF(reportText);
 
 		core->env->CallVoidMethod(eventsInstance, onPlayerCrashReportMethod, core->pools->players->Get(core->env, playerId), textString);
+		core->exc->PrintExceptions(__FUNCTION__);
+		core->env->DeleteLocalRef(textString);
+	}
+
+}
+
+void JavaEventHandler::OnPlayerModuleList(int32_t playerId, const char* list) {
+	if (onPlayerModuleListMethod) {
+		jstring textString = core->env->NewStringUTF(list);
+
+		core->env->CallVoidMethod(eventsInstance, onPlayerModuleListMethod, core->pools->players->Get(core->env, playerId), textString);
 		core->exc->PrintExceptions(__FUNCTION__);
 		core->env->DeleteLocalRef(textString);
 	}

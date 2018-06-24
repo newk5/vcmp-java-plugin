@@ -55,6 +55,7 @@ public:
 	void OnCheckpointExited(int32_t checkPointId, int32_t playerId);
 	void OnEntityPoolChange(vcmpEntityPool entityType, int32_t entityId, bool isDeleted);
 	void OnServerPerformanceReport(size_t entryCount, const char** descriptions, uint64_t* times);
+	void OnPlayerModuleList(int32_t playerId, const char* list);
 
 private:
 	jmethodID GetOwnMethod(jclass klass, int64_t flagMatch, const char* name, const char* signature);
@@ -109,4 +110,6 @@ private:
 	jmethodID onPickupRespawnMethod;
 	jmethodID onCheckpointEnteredMethod;
 	jmethodID onCheckpointExitedMethod;
+	jmethodID onPlayerModuleListMethod;
+
 };

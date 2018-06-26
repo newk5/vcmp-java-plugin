@@ -55,6 +55,35 @@ Java_Pickup_setSimple(jint, setAutomaticTimer, SetPickupAutoTimer);
 Java_Pickup_getSimple(jint, getAutomaticTimer, GetPickupAutoTimer);
 Java_Pickup_doSimple(refresh, RefreshPickup);
 
+
+typedef int(*OPTS_TogglePickupOption) (int pickupId, unsigned int value);
+
+extern "C" JNIEXPORT void JNICALL Java_com_maxorator_vcmp_java_plugin_integration_placeable_PickupImpl_setOption(JNIEnv* jni, jobject obj, jint option, jboolean value) {
+	int pickupId;
+
+	if (!core->exc->ThreadCheck(jni));
+	else if ((pickupId = core->pools->pickups->GetId(jni, obj)) == -1);
+	else {
+		api->SetPickupOption(pickupId, (vcmpPickupOption)option, value);
+	}
+	return;
+}
+
+typedef unsigned int(*OPTS_GetPickupOption) (int playerId);
+
+extern "C" JNIEXPORT jboolean JNICALL Java_com_maxorator_vcmp_java_plugin_integration_placeable_PickupImpl_getOption(JNIEnv* jni, jobject obj, jint option) {
+	int pickupId;
+
+	if (!core->exc->ThreadCheck(jni));
+	else if ((pickupId = core->pools->pickups->GetId(jni, obj)) == -1);
+	else {
+		return !!api->GetPickupOption(pickupId, (vcmpPickupOption)option);
+	}
+	return false;
+}
+
+
+
 extern "C" JNIEXPORT void JNICALL Java_com_maxorator_vcmp_java_plugin_integration_placeable_PickupImpl_setPosition(JNIEnv* jni, jobject obj, jfloat X, jfloat Y, jfloat Z) {
 	int pickupId;
 

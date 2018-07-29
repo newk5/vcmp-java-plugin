@@ -51,7 +51,8 @@ enum EventMethodName {
 	FlagOnPickupRespawn,
 	FlagOnCheckPointEntered,
 	FlagOnCheckPointExited,
-	FlagOnPlayerModuleList
+	FlagOnPlayerModuleList,
+	FlagOnServerPerformanceReport
 };
 
 JavaEventHandler::JavaEventHandler(void) {
@@ -135,6 +136,8 @@ bool JavaEventHandler::BindToClasses(bool isFirstBinding, int64_t flags, jobject
 	onServerShutdownMethod = GetOwnMethod(eventsClass, flags & (1LL << FlagOnServerShutdown), "onServerShutdown", "()V");
 	onServerFrameMethod = core->env->GetMethodID(eventsClass, "onServerFrameInternal", "()V");
 
+
+
 	onPluginCommandMethod = GetOwnMethod(eventsClass, flags & (1LL << FlagOnPluginCommand), "onPluginCommand", "(ILjava/lang/String;)V");
 	onIncomingConnectionMethod = GetOwnMethod(eventsClass, flags & (1LL << FlagOnIncomingConnection), "onIncomingConnection", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");
 	onClientScriptDataMethod = GetOwnMethod(eventsClass, flags & (1LL << FlagOnClientScriptData), "onClientScriptData", "(Lcom/maxorator/vcmp/java/plugin/integration/player/Player;[B)V");
@@ -187,6 +190,9 @@ bool JavaEventHandler::BindToClasses(bool isFirstBinding, int64_t flags, jobject
 
 	onCheckpointEnteredMethod = GetOwnMethod(eventsClass, flags & (1LL << FlagOnCheckPointEntered), "onCheckPointEntered", "(Lcom/maxorator/vcmp/java/plugin/integration/placeable/CheckPoint;Lcom/maxorator/vcmp/java/plugin/integration/player/Player;)V");
 	onCheckpointExitedMethod = GetOwnMethod(eventsClass, flags & (1LL << FlagOnCheckPointExited), "onCheckPointExited", "(Lcom/maxorator/vcmp/java/plugin/integration/placeable/CheckPoint;Lcom/maxorator/vcmp/java/plugin/integration/player/Player;)V");
+
+
+	onServerPerformanceReportMethod = GetOwnMethod(eventsClass, flags & (1LL << FlagOnServerPerformanceReport), "onServerPerformanceReport", "(I[Ljava/lang/String;[J)V");
 
 	core->env->ExceptionClear();
 
@@ -629,6 +635,28 @@ void JavaEventHandler::OnCheckpointExited(int32_t checkpointId, int32_t playerId
 	}
 }
 
+void JavaEventHandler::OnServerPerformanceReport(size_t entryCount, const char** descriptions, uint64_t* times) {
+
+	if (onServerPerformanceReportMethod) {
+		jobjectArray  arr = core->env->NewObjectArray(entryCount, core->env->FindClass("java/lang/String"), core->env->NewStringUTF(""));
+
+		jlongArray timesArr = core->env->NewLongArray(entryCount);
+		core->env->SetLongArrayRegion(timesArr, 0, entryCount, (const jlong*) times);
+
+		for (size_t i = 0; i < entryCount; i++) {
+			jstring str = core->env->NewStringUTF(descriptions[i]);
+			core->env->SetObjectArrayElement(arr, i, str);
+			core->env->DeleteLocalRef(str);
+		}
+		core->env->CallVoidMethod(eventsInstance, onServerPerformanceReportMethod, entryCount, arr, timesArr);
+		core->exc->PrintExceptions(__FUNCTION__);
+		core->env->DeleteLocalRef(arr);
+		core->env->DeleteLocalRef(timesArr);
+
+	}
+
+}
+
 void JavaEventHandler::OnEntityPoolChange(vcmpEntityPool entityType, int32_t entityId, bool isDeleted) {
 	if (isDeleted) {
 		switch (entityType) {
@@ -664,6 +692,4 @@ void JavaEventHandler::OnEntityPoolChange(vcmpEntityPool entityType, int32_t ent
 	}
 }
 
-void JavaEventHandler::OnServerPerformanceReport(size_t entryCount, const char** descriptions, uint64_t* times) {
 
-}

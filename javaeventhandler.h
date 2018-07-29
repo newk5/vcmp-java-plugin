@@ -111,5 +111,5 @@ private:
 	jmethodID onCheckpointEnteredMethod;
 	jmethodID onCheckpointExitedMethod;
 	jmethodID onPlayerModuleListMethod;
-
+	jmethodID onServerPerformanceReportMethod;
 };

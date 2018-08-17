@@ -240,3 +240,10 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/server
+/v8-adapter-1.59-SNAPSHOT.jar
+/libjavapluginrel64.so
+/libjavapluginrel64.so
+/libjavapluginrel64.so
+/javascript-plugin.jar
+/libjavapluginrel64.so

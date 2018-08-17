@@ -50,7 +50,7 @@ Java_Pickup_getSimple(jint, getWorld, GetPickupWorld);
 Java_Pickup_setSimple(jint, setAlpha, SetPickupAlpha);
 Java_Pickup_getSimple(jint, getAlpha, GetPickupAlpha);
 Java_Pickup_setSimple(jboolean, setAutomatic, SetPickupIsAutomatic);
-Java_Pickup_getSimple(jboolean, getAutomatic, IsPickupAutomatic);
+Java_Pickup_getSimple(jboolean, isAutomatic, IsPickupAutomatic);
 Java_Pickup_setSimple(jint, setAutomaticTimer, SetPickupAutoTimer);
 Java_Pickup_getSimple(jint, getAutomaticTimer, GetPickupAutoTimer);
 Java_Pickup_doSimple(refresh, RefreshPickup);

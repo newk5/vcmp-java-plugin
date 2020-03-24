@@ -380,7 +380,7 @@ extern "C" JNIEXPORT jint JNICALL Java_com_maxorator_vcmp_java_plugin_integratio
 	if (!core->exc->ThreadCheck(jni));
 	else if ((playerId = core->pools->players->GetId(jni, obj)) == -1);
 	else {
-		api->GetPlayerWeaponAtSlot(playerId, slot);
+		return api->GetPlayerWeaponAtSlot(playerId, slot);
 	}
 	return 0;
 }
@@ -391,7 +391,7 @@ extern "C" JNIEXPORT jint JNICALL Java_com_maxorator_vcmp_java_plugin_integratio
 	if (!core->exc->ThreadCheck(jni));
 	else if ((playerId = core->pools->players->GetId(jni, obj)) == -1);
 	else {
-		api->GetPlayerAmmoAtSlot(playerId, slot);
+		return api->GetPlayerAmmoAtSlot(playerId, slot);
 	}
 	return 0;
 }

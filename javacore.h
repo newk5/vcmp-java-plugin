@@ -53,8 +53,10 @@ private:
 	char m_mainClassSetting[256];
 	char m_classPathSetting[512];
 	char m_memorySetting[16];
+	char m_agentPathSetting[512];
 	char m_classPathArgument[512];
 	char m_libraryPathArgument[512];
+	char m_agentPathArgument[512];
 	char m_memoryArgument[16];
 	char m_debugArgument[128];
 

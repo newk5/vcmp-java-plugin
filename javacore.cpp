@@ -30,9 +30,11 @@ JavaCore::JavaCore(void) {
 	m_jvmLibPathSetting[0] = '\0';
 	m_mainClassSetting[0] = '\0';
 	m_classPathSetting[0] = '\0';
+	m_agentPathSetting[0] = '\0';
 	m_memorySetting[0] = '\0';
 	m_classPathArgument[0] = '\0';
 	m_libraryPathArgument[0] = '\0';
+	m_agentPathArgument[0] = '\0';
 	m_debugArgument[0] = '\0';
 
 	m_debugPort = 0;
@@ -150,6 +152,9 @@ bool JavaCore::LoadSettings(void) {
 			else if (strcmp(name, "debugPort") == 0) {
 				m_debugPort = (int)strtol(value, nullptr, 10);
 			}
+			else if (strcmp(name, "agent") == 0) {
+				Platform::strncpy(m_agentPathSetting, value, sizeof(m_agentPathSetting));
+			}
 		}
 	}
 
@@ -203,18 +208,41 @@ bool JavaCore::SetupJVMArguments(void) {
 	Platform::snprintf(m_libraryPathArgument, sizeof(m_libraryPathArgument), "-Djava.library.path=%s", m_moduleDirectory);
 	Platform::snprintf(m_memoryArgument, sizeof(m_memoryArgument), "-Xmx%s", m_memorySetting);
 	Platform::snprintf(m_debugArgument, sizeof(m_debugArgument), "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=%d", m_debugPort);
+	Platform::snprintf(m_agentPathArgument, sizeof(m_agentPathArgument), "-javaagent:%s", m_agentPathSetting);
 
-	JavaVMOption* options = new JavaVMOption[4];
+
+	bool noAgent = m_agentPathSetting[0] == '\0';
+
+
+	JavaVMOption* options = new JavaVMOption[5];
 	options[0].optionString = m_classPathArgument;
 	options[0].extraInfo = nullptr;
 	options[1].optionString = m_libraryPathArgument;
 	options[1].extraInfo = nullptr;
 	options[2].optionString = m_memoryArgument;
 	options[2].extraInfo = nullptr;
-	options[3].optionString = m_debugArgument;
-	options[3].extraInfo = nullptr;
+	if (noAgent) {
+		options[3].optionString = m_debugArgument;
+		options[3].extraInfo = nullptr;
 
-	m_vmArguments.nOptions = m_debugPort == 0 ? 3 : 4;
+		options[4].optionString = nullptr;
+		options[4].extraInfo = nullptr;
+	}
+	else {
+		options[3].optionString = m_agentPathArgument;
+		options[3].extraInfo = nullptr;
+
+		options[4].optionString = m_debugArgument;
+		options[4].extraInfo = nullptr;
+	}
+	
+	if (noAgent) {
+		m_vmArguments.nOptions = m_debugPort == 0 ? 3 : 4;
+	}
+	else {
+		m_vmArguments.nOptions = m_debugPort == 0 ? 4 : 5;
+	}
+	
 	m_vmArguments.options = options;
 
 	Logging::Log(LogInfo, __FUNCTION__, "Java VM settings initialized.");

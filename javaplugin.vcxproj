@@ -21,6 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{823E71CC-CA5F-4961-A56D-A79D58DEE37F}</ProjectGuid>
     <RootNamespace>javaplugin</RootNamespace>
+    <ProjectName>javaplugin</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

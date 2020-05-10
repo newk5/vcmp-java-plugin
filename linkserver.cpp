@@ -346,7 +346,7 @@ extern "C" JNIEXPORT jobject JNICALL Java_com_maxorator_vcmp_java_plugin_integra
 	uint32_t colour;
 	float x, y, z;
 
-	if (!api->GetCoordBlipInfo(index, &worldId, &x, &y, &z, &scale, &colour, &spriteId)) {
+	if (api->GetCoordBlipInfo(index, &worldId, &x, &y, &z, &scale, &colour, &spriteId) == 1) {
 		return nullptr;
 	}
 
